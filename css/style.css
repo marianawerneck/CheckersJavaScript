@@ -1,0 +1,48 @@
+*{margin:0;padding:0;}
+
+.dark{
+	background: #008000;
+}
+
+.light{
+	background: #F5FFFA;
+}
+
+.box{
+	margin-left: 33%;
+	margin-top: 5%;
+	width:75%;
+	background:#000000;
+}
+
+.box .board{
+	float:left;
+	width:512px;
+	background:#000022;
+}
+
+.board .square{
+	float:left;
+	height:64px;
+	width:64px;
+	text-align:center;
+}
+
+.piece{
+	float:left;
+	height:64px;
+	width:64px;
+	cursor: pointer;
+	background-size:cover !important;
+	z-index: 2;
+	
+}
+
+.blackPiece{
+	background: url(../img/checker-black.png);
+}
+
+
+.whitePiece{
+	background: url(../img/checker-white.png);
+}
