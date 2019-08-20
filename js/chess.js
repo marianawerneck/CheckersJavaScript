@@ -12,8 +12,9 @@ $(function(){
 	var selected = 0;
 	var selectedPiece = '';
 						  
-	function initBoard(){
+	function drawPiece(){
 		
+		$('div').remove('.piece');
 						  
 		for (var i = 0; i < 8; ++i){
 			for (var  k= 0; k < 8; ++k){
@@ -36,16 +37,28 @@ $(function(){
 	});*/
 	
 	$('body').on('click','.square',function(){
-		if(selected == 1){
-			$('#'+selectedPiece).fadeTo(10,1);
-			selectedPiece = '';
-			selected = 0;
-		}
-		if(selected == 0){
-			var tileId = $(this).attr('id');
+		
+		var tileId = $(this).attr('id');
 			
 			var i = parseInt(tileId.substring(0,1));
 			var k = parseInt(tileId.substring(1));
+			
+		if(selected == 1){
+			$('#'+selectedPiece).fadeTo(10,1);
+			if(board[i][k] == 1){
+				board[i][k] = 2;
+			var m = parseInt(selectedPiece.substring(0,1));
+			var n = parseInt(selectedPiece.substring(1));
+			board[m][n] = 1
+			drawPiece();
+			}
+			selectedPiece = '';
+			selected = 0;
+			
+			
+		}
+		if(selected == 0){
+			
 			console.log(tileId);
 			console.log(i);
 			console.log(k);
@@ -81,7 +94,7 @@ $(function(){
 		
 	};
 	printBoard();
-	initBoard();
+	drawPiece();
 });
 
 
