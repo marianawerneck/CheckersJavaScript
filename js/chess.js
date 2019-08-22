@@ -11,6 +11,7 @@ $(function(){
 						  
 	var selected = 0;
 	var selectedPiece = '';
+	var player = 3;
 						  
 	function drawPiece(){
 		
@@ -47,16 +48,26 @@ $(function(){
 				var tBoard = moveUpDown(xi,yi,xf,yf,player,enemy);
 				return tBoard;
 			}else if(board[xi][yi] == -3){
-				//moveUpDown();
-				//moveDownUp();
+				var tup = moveUpDown(xi,yi,xf,yf,player,enemy);
+				var tdown = moveDownUp(xi,yi,xf,yf,player,enemy);
+				if (tup == []){
+					return tdown;
+				}else{
+					return tup;
+				}
 			}
 		}else if(player == 2){
 			if(board[xi][yi] == 2){
 				var tBoard = moveDownUp(xi,yi,xf,yf,player,enemy);
 				return tBoard;
 			}else if(board[xi][yi] == -2){
-				//moveUpDown();
-				//moveDownUp();
+				var tup = moveUpDown(xi,yi,xf,yf,player,enemy);
+				var tdown = moveDownUp(xi,yi,xf,yf,player,enemy);
+				if (tup == []){
+					return tdown;
+				}else{
+					return tup;
+				}
 			}
 		}
 	}
@@ -75,9 +86,9 @@ $(function(){
 								board[xi][yi] = 1;
                                 board[xf][yf] = 1;
 								if(xf+1 == 7 && valorPeca == player){
-									board[xf-1][yf-1] = player*(-1);
+									board[xf+1][yf-1] = player*(-1);
 								}else{
-									board[xf-1][yf-1] = valorPeca;
+									board[xf+1][yf-1] = valorPeca;
 								}
 								return board;
 							}
@@ -87,13 +98,13 @@ $(function(){
 					}
 					else{
 						if (yf +1 < 8){
-							if (board[xf-1][yf+1] == 1){
+							if (board[xf+1][yf+1] == 1){
 								board[xi][yi] = 1;
                                 board[xf][yf] = 1;
 								if(xf+1 == 7 && valorPeca == player){
-									board[xf-1][yf+1] = player*(-1);
+									board[xf+1][yf+1] = player*(-1);
 								}else{
-									board[xf-1][yf+1] = valorPeca;
+									board[xf+1][yf+1] = valorPeca;
 								}
 								return board;
 							}
@@ -118,6 +129,7 @@ $(function(){
 				
 			
 		}
+		return [];
 	}
 	
 	function moveDownUp(xi,yi,xf,yf,player,enemy){
@@ -149,10 +161,10 @@ $(function(){
 							if (board[xf-1][yf+1] == 1){
 								board[xi][yi] = 1;
                                 board[xf][yf] = 1;
-								if(xf+1 == 7 && valorPeca == 3){
-									board[xf+1][yf+1] = -3;
+								if(xf+1 == 7 && valorPeca == player){
+									board[xf-1][yf+1] = player*(-1);
 								}else{
-									board[xf+1][yf+1] = valorPeca;
+									board[xf-1][yf+1] = valorPeca;
 								}
 								return board;
 							}
@@ -164,8 +176,8 @@ $(function(){
                                        
 			}else if(board[xf][yf] == 1){
                 board[xi][yi] = 1;
-                if(xf == 7 && valorPeca ==3){
-                    board[xf][yf] = -3;
+                if(xf == 7 && valorPeca ==player){
+                    board[xf][yf] = player*(-1);
 				}else{
                     board[xf][yf] = valorPeca;
                      
@@ -177,6 +189,7 @@ $(function(){
 				
 			
 		}
+		return [];
 	}
 	
 	/*seleciona peças a serem jogadas*/
@@ -195,8 +208,20 @@ $(function(){
 			var m = parseInt(selectedPiece.substring(0,1));
 			var n = parseInt(selectedPiece.substring(1));
 			//board[m][n] = 1
-			makeMove(m,n,i,k,3);
+			var sucessful = makeMove(m,n,i,k,player);
 			drawPiece();
+			console.log("sucessful"+sucessful);
+			console.log(sucessful.length);
+			if(sucessful.length > 0){
+				
+				if(player==2){
+					player = 3;
+					$('#player h3').text("Player: white");
+				}else{
+					player = 2;
+					$('#player h3').text("Player: black");
+				}
+			}
 			}
 			selectedPiece = '';
 			selected = 0;
@@ -209,11 +234,23 @@ $(function(){
 			console.log(i);
 			console.log(k);
 			
-			if(board[i][k] == 3){
-				console.log('black');
-				$(this).fadeTo(10,0.5);
-				selected = 1;
-				selectedPiece = tileId;
+			if (player == 3){
+				if(board[i][k] == 3){
+					console.log('white');
+					console.log(player);
+					$(this).fadeTo(10,0.5);
+					selected = 1;
+					selectedPiece = tileId;
+				}
+			}
+			else if (player == 2){
+				if(board[i][k] == 2){
+					console.log('black');
+					console.log(player);
+					$(this).fadeTo(10,0.5);
+					selected = 1;
+					selectedPiece = tileId;
+				}
 			}
 		}
 		/*}else if(selected == 1){
@@ -239,6 +276,7 @@ $(function(){
 		}
 		
 	};
+	$('body').append('<div id="player" ><h3>Player: white</h3></div>');
 	printBoard();
 	drawPiece();
 });

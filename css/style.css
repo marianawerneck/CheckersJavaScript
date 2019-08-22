@@ -46,3 +46,9 @@
 .whitePiece{
 	background: url(../img/checker-white.png);
 }
+
+#player{
+	float:left;
+	margin-left: 10px;
+	color: #000070;
+}
