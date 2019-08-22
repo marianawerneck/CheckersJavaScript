@@ -50,6 +50,14 @@ $(function(){
 				//moveUpDown();
 				//moveDownUp();
 			}
+		}else if(player == 2){
+			if(board[xi][yi] == 2){
+				var tBoard = moveDownUp(xi,yi,xf,yf,player,enemy);
+				return tBoard;
+			}else if(board[xi][yi] == -2){
+				//moveUpDown();
+				//moveDownUp();
+			}
 		}
 	}
 	
@@ -66,10 +74,10 @@ $(function(){
 							if (board[xf+1][yf-1] == 1){
 								board[xi][yi] = 1;
                                 board[xf][yf] = 1;
-								if(xf+1 == 7 && valorPeca == 3){
-									board[xf+1][yf-1] = -3;
+								if(xf+1 == 7 && valorPeca == player){
+									board[xf-1][yf-1] = player*(-1);
 								}else{
-									board[xf+1][yf-1] = valorPeca;
+									board[xf-1][yf-1] = valorPeca;
 								}
 								return board;
 							}
@@ -79,7 +87,66 @@ $(function(){
 					}
 					else{
 						if (yf +1 < 8){
-							if (board[xf+1][yf+1] == 1){
+							if (board[xf-1][yf+1] == 1){
+								board[xi][yi] = 1;
+                                board[xf][yf] = 1;
+								if(xf+1 == 7 && valorPeca == player){
+									board[xf-1][yf+1] = player*(-1);
+								}else{
+									board[xf-1][yf+1] = valorPeca;
+								}
+								return board;
+							}
+							return [];
+						}
+						return [];
+					}
+				}return [];
+                                       
+			}else if(board[xf][yf] == 1){
+                board[xi][yi] = 1;
+                if(xf == 7 && valorPeca == player){
+                    board[xf][yf] = player*(-1);
+				}else{
+                    board[xf][yf] = valorPeca;
+                     
+				return board;
+				}
+			}else{
+				return [];
+			}
+				
+			
+		}
+	}
+	
+	function moveDownUp(xi,yi,xf,yf,player,enemy){
+		/*check move direction*/
+		if( xf == (xi-1) && ((yf == yi -1) || (yf == yi + 1))){
+			valorPeca = board[xi][yi];
+			/*check enemy existence*/
+			if(board[xf][yf] == enemy || board[xf][yf] == enemy*(-1)){
+				if ((xi-2) >= 0){
+					/*verifica a direcao do movimento*/
+                    if (yf == yi -1){
+						if (yf -1 >= 0){
+							if (board[xf-1][yf-1] == 1){
+								board[xi][yi] = 1;
+                                board[xf][yf] = 1;
+								if(xf-1 == 0 && valorPeca == player){
+									board[xf-1][yf-1] = player*(-1);
+								}else{
+									board[xf-1][yf-1] = valorPeca;
+								}
+								return board;
+							}
+							return [];
+						}
+						return [];
+					}
+					else{
+						if (yf +1 < 8){
+							if (board[xf-1][yf+1] == 1){
 								board[xi][yi] = 1;
                                 board[xf][yf] = 1;
 								if(xf+1 == 7 && valorPeca == 3){
