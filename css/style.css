@@ -47,6 +47,14 @@
 	background: url(../img/checker-white.png);
 }
 
+.blackKing{
+	background: url(../img/king-black.png);
+}
+
+.whiteKing{
+	background: url(../img/king-white.png);
+}
+
 #player{
 	float:left;
 	margin-left: 10px;

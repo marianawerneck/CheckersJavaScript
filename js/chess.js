@@ -1,13 +1,13 @@
 $(function(){
 	
-	board = [[0,3,0,3,0,3,0,3],
-                          [3,0,3,0,3,0,3,0],
+	board = [[0,3,0,3,0,1,0,3],
+                          [3,0,3,0,2,0,3,0],
                           [0,3,0,3,0,3,0,3],
-                          [1,0,1,0,2,0,1,0],
+                          [1,0,1,0,-2,0,1,0],
                           [0,1,0,1,0,1,0,1],
                           [2,0,2,0,2,0,2,0],
-                          [0,2,0,2,0,2,0,2],
-                          [2,0,2,0,2,0,2,0]];
+                          [0,2,0,2,0,3,0,2],
+                          [2,0,2,0,2,0,1,0]];
 						  
 	var selected = 0;
 	var selectedPiece = '';
@@ -24,6 +24,12 @@ $(function(){
 				}
 				if (board[i][k] == 3){
 					$('#'+i+k+'').append('<div class="piece whitePiece"></div>');
+				}
+				if (board[i][k] == -2){
+					$('#'+i+k+'').append('<div class="piece blackKing"></div>');
+				}
+				if (board[i][k] == -3){
+					$('#'+i+k+'').append('<div class="piece whiteKing"></div>');
 				}
 			}
 		}
@@ -50,10 +56,10 @@ $(function(){
 			}else if(board[xi][yi] == -3){
 				var tup = moveUpDown(xi,yi,xf,yf,player,enemy);
 				var tdown = moveDownUp(xi,yi,xf,yf,player,enemy);
-				if (tup == []){
-					return tdown;
-				}else{
+				if (tup.length > 0){
 					return tup;
+				}else{
+					return tdown;
 				}
 			}
 		}else if(player == 2){
@@ -63,10 +69,10 @@ $(function(){
 			}else if(board[xi][yi] == -2){
 				var tup = moveUpDown(xi,yi,xf,yf,player,enemy);
 				var tdown = moveDownUp(xi,yi,xf,yf,player,enemy);
-				if (tup == []){
-					return tdown;
-				}else{
+				if (tup.length > 0){
 					return tup;
+				}else{
+					return tdown;
 				}
 			}
 		}
@@ -121,8 +127,9 @@ $(function(){
 				}else{
                     board[xf][yf] = valorPeca;
                      
-				return board;
+				
 				}
+				return board;
 			}else{
 				return [];
 			}
@@ -161,7 +168,7 @@ $(function(){
 							if (board[xf-1][yf+1] == 1){
 								board[xi][yi] = 1;
                                 board[xf][yf] = 1;
-								if(xf+1 == 7 && valorPeca == player){
+								if(xf-1 == 0 && valorPeca == player){
 									board[xf-1][yf+1] = player*(-1);
 								}else{
 									board[xf-1][yf+1] = valorPeca;
@@ -176,13 +183,14 @@ $(function(){
                                        
 			}else if(board[xf][yf] == 1){
                 board[xi][yi] = 1;
-                if(xf == 7 && valorPeca ==player){
+                if(xf == 0 && valorPeca ==player){
                     board[xf][yf] = player*(-1);
 				}else{
                     board[xf][yf] = valorPeca;
                      
-				return board;
+				
 				}
+				return board;
 			}else{
 				return [];
 			}
@@ -209,7 +217,7 @@ $(function(){
 			var n = parseInt(selectedPiece.substring(1));
 			//board[m][n] = 1
 			var sucessful = makeMove(m,n,i,k,player);
-			drawPiece();
+			
 			console.log("sucessful"+sucessful);
 			console.log(sucessful.length);
 			if(sucessful.length > 0){
@@ -222,6 +230,7 @@ $(function(){
 					$('#player h3').text("Player: black");
 				}
 			}
+			drawPiece();
 			}
 			selectedPiece = '';
 			selected = 0;
@@ -235,7 +244,7 @@ $(function(){
 			console.log(k);
 			
 			if (player == 3){
-				if(board[i][k] == 3){
+				if(board[i][k] == 3 || board[i][k] == -3){
 					console.log('white');
 					console.log(player);
 					$(this).fadeTo(10,0.5);
@@ -244,7 +253,7 @@ $(function(){
 				}
 			}
 			else if (player == 2){
-				if(board[i][k] == 2){
+				if(board[i][k] == 2 || board[i][k] == -2){
 					console.log('black');
 					console.log(player);
 					$(this).fadeTo(10,0.5);
