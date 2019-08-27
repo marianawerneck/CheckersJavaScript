@@ -412,11 +412,11 @@ $(function(){
 					var peca = tabuleiro[i][j];
                     if (peca == 2){pontosPlayer+=1;}
                         
-                    if (peca == -2){pontosPlayer+=2;}
+                    if (peca == -2){pontosPlayer+=1;}
                         
-                    if (peca == 3){pontosPlayer+=1;}
+                    if (peca == 3){pontosInimigo+=2;}
                         
-                    if (peca == -3){pontosPlayer+=2;}
+                    if (peca == -3){pontosInimigo+=2;}
                         
 				}
 			}
@@ -427,17 +427,17 @@ $(function(){
             for (var i = 0; i < tabuleiro.length; ++i){
                 for (var j = 0; j < tabuleiro.length; ++j){
 					var peca = tabuleiro[i][j];
-                    if (peca == 2){pontosPlayer+=1;}
+                    if (peca == 2){pontosInimigo+=2;}
                         
-                    if (peca == -2){pontosPlayer+=2;}
+                    if (peca == -2){pontosInimigo+=2;}
                         
                     if (peca == 3){pontosPlayer+=1;}
                         
-                    if (peca == -3){pontosPlayer+=2;}
+                    if (peca == -3){pontosPlayer+=1;}
                         
 				}
 			}
-            return pontosPlayer - pontosInimigo
+            return pontosPlayer - pontosInimigo;
 		}
 }
 
