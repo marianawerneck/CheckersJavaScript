@@ -579,9 +579,13 @@ function pcMove(tabuleiro,player){
 					//console.log(player);
 					$(this).fadeTo(10,0.5);
 					$(this).addClass('highlight');
-					if(mboard[i][k] == 3){
+					if(mboard[i][k] == 3 || mboard[i][k] == -3){
 						$("#"+(i+1)+(k+1)).addClass('highlight');
 						$("#"+(i+1)+(k-1)).addClass('highlight');
+					}
+					if(mboard[i][k] == -3){
+						$("#"+(i-1)+(k+1)).addClass('highlight');
+						$("#"+(i-1)+(k-1)).addClass('highlight');
 					}
 					selected = 1;
 					selectedPiece = tileId;
@@ -593,9 +597,13 @@ function pcMove(tabuleiro,player){
 					//console.log(player);
 					$(this).fadeTo(10,0.5);
 					$(this).addClass('highlight');
-					if(mboard[i][k] == 2){
+					if(mboard[i][k] == 2 || mboard[i][k] == -2){
 						$("#"+(i-1)+(k+1)).addClass('highlight');
 						$("#"+(i-1)+(k-1)).addClass('highlight');
+					}
+					if(mboard[i][k] == -3){
+						$("#"+(i+1)+(k+1)).addClass('highlight');
+						$("#"+(i+1)+(k-1)).addClass('highlight');
 					}
 					selected = 1;
 					selectedPiece = tileId;
